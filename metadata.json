@@ -1,0 +1,7 @@
+{
+  "name": "Copy of EduSpark AI",
+  "description": "Hệ sinh thái học tập thông minh sử dụng AI hỗ trợ học sinh và giáo viên.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
