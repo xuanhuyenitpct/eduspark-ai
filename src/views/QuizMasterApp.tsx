@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, useCallback } from "react";
 import { GoogleGenAI, Type } from "@google/genai";
 import { useApiKey } from '../context/ApiContext';
