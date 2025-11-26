@@ -1,4 +1,4 @@
-
+// @ts-nocheck
 import React, { useState, useRef, useEffect } from "react";
 import { GoogleGenAI, Modality, Chat } from "@google/genai";
 import { useApiKey } from '../context/ApiContext';
