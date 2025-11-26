@@ -7,29 +7,26 @@ import React, {
   ReactNode,
 } from "react";
 
-// Kiểu dữ liệu đơn giản cho context
 const ApiContext = createContext({
-  apiKey: null as string | null,
+  apiKey: null,
   setApiKey: (key: string | null) => {},
 });
 
-// Lấy API key từ biến môi trường Vite (Vercel đang set VITE_GEMINI_API_KEY)
-const ENV_API_KEY = import.meta.env.VITE_GEMINI_API_KEY as
-  | string
-  | undefined;
+// Lấy API KEY từ Vercel (Vite)
+const ENV_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-// Provider dùng trong App.tsx
 export const ApiProvider = ({ children }: { children: ReactNode }) => {
   const [apiKey, setApiKeyState] = useState<string | null>(null);
 
-  // Khi client mount, lấy key từ localStorage hoặc ENV
+  // Khi app load, ưu tiên lấy từ localStorage → nếu không có thì dùng ENV
   useEffect(() => {
     if (typeof window === "undefined") {
       setApiKeyState(ENV_API_KEY ?? null);
       return;
     }
-    const stored = window.localStorage.getItem("gemini-api-key");
-    setApiKeyState(stored || ENV_API_KEY || null);
+
+    const saved = window.localStorage.getItem("gemini-api-key");
+    setApiKeyState(saved || ENV_API_KEY || null);
   }, []);
 
   const setApiKey = (key: string | null) => {
@@ -50,5 +47,4 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook dùng trong các component con
 export const useApiKey = () => useContext(ApiContext);
