@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { GoogleGenAI, Modality, Chat } from "@google/genai";
 import { useApiKey } from '../context/ApiContext';
+const ENV_API_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined;
 
 const SCIENCE_CURRICULUM = {
     "Lớp 6": [
@@ -25,9 +26,10 @@ interface AILabAppProps {
 }
 
 export const AILabApp = ({ onExit }: AILabAppProps) => {
-    const { runWithApiKey, apiKey, handleError } = useApiKey();
-    const [mode, setMode] = useState<'explore' | 'curriculum'>('curriculum');
-    const [selectedGrade, setSelectedGrade] = useState("Lớp 6");
+  const { runWithApiKey, apiKey: ctxKey, handleError } = useApiKey();
+  const apiKey = ctxKey || ENV_API_KEY;
+  const [mode, setMode] = useState<'explore' | 'curriculum'>('curriculum');
+  const [selectedGrade, setSelectedGrade] = useState('Lớp 6');
     
     const [concept, setConcept] = useState('');
     const [isLoading, setIsLoading] = useState(false);
